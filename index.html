@@ -1,0 +1,625 @@
+!<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AccioJob</title>
+    <link rel="stylesheet" href="./stylesheet.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+        .navbar {
+            position: fixed;
+            top: 0px;
+            width: 100%;
+            background-color: #FFFFFF;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-left img {
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-right ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-right ul li {
+            margin-right: 15px;
+        }
+
+        .nav-right .svg {
+            margin-right: 15px;
+        }
+
+        .btn-login {
+            margin-left: 15px;
+        }
+
+
+        body {
+            margin-top: 70px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar " style = "margin-top: -10px">
+        <div class="nav-left">
+            <img class = "acc-logo" src="data:image/png;base64,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" alt="logo" style="margin-left: 100px;">
+            <a class="nav-link active accio" href="#">AccioJob</a>
+            <img class = "nsdc-logo" src="data:image/png;base64,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" alt="NSDC">
+        </div>
+        <div class="nav-right">
+            <ul>
+                <li>
+                    <a class="nav-link courses" href="#" style="margin-right: -20px;">Courses</a>
+                </li>
+                <li>
+                    <div class="svg" style="margin-right: -20px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19" fill="none">
+                            <g clip-path="url(#clip0_1127_910)">
+                                <path
+                                    d="M9.98115 10.379L13.6937 6.6665L14.7542 7.727L9.98115 12.5L5.20815 7.727L6.26865 6.6665L9.98115 10.379Z"
+                                    fill="#4F4F4F" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_1127_910">
+                                    <rect width="18" height="18" fill="white"
+                                        transform="matrix(0 1 -1 0 18.9807 0.5)" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    </div>
+                </li>
+                <li>
+                    <a class="nav-link active courses" href="#" style="margin-right: -20px;">AccioJob Reviews</a>
+                </li>
+                <li>
+                    <a class="nav-link active courses" href="#" style="margin-right: -20px;">Scholarship Test</a>
+                </li>
+                <li>
+                    <a class="nav-link active courses" href="#" style="margin-right: -10px;">More</a>
+                </li>
+                <li>
+                    <div class="svg" style="margin-right: -20px;"><svg xmlns="http://www.w3.org/2000/svg" width="19"
+                            height="19" viewBox="0 0 19 19" fill="none">
+                            <g clip-path="url(#clip0_1127_921)">
+                                <path
+                                    d="M9.98115 10.379L13.6937 6.6665L14.7542 7.727L9.98115 12.5L5.20815 7.727L6.26865 6.6665L9.98115 10.379Z"
+                                    fill="#4F4F4F" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_1127_921">
+                                    <rect width="18" height="18" fill="white"
+                                        transform="matrix(0 1 -1 0 18.9807 0.5)" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    </div>
+                </li>
+            </ul>
+            <button type="button" class="btn btn-outline-primary f-s-i btn-login"
+                style="color: var(--primaryskyblue, #2F80ED); font-family: ABeeZee; font-size: 14px; font-style: italic; font-weight: 400; line-height: normal; margin-right: 110px; ">Login</button>
+        </div>
+    </nav>
+
+    <div class="harizontal-line">
+        Next batch starts in ⌛ 22 Days, Hurry! ️
+    </div>
+
+    <section class="all">
+
+        <section class="tagline-header">
+            <div class="space">
+                <div class="tagline">
+                    <p>Launch your career with our</p>
+                    <p><span>Full Stack Developer</span> Courses </p>
+                </div>
+                <div class="curriculam" style = "font-family:'Times New Roman', Times, serif">
+                    <p>Curriculum designed and taught by Alumni from IIT’s & Leading Tech Companies.</p>
+                </div>
+
+                <div class="info-card">
+                    <div class="first d-flex justify-content-center align-items-center">
+                        <div class="row">
+                            <div class="col-4">
+                                <div id="round">
+                                    <img style = "margin-top: -15px;" class = "logo" src="https://img.freepik.com/premium-vector/hand-holding-bag-with-money-icon-black-money-sack-sign-vector-isolated-white-background-eps-10_399089-2809.jpg?size=626&ext=jpg&ga=GA1.1.75233702.1693055142&semt=ais" alt="logo">
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <p style="color: var(--BLACK, #2B2F34);
+                                font-family: ABeeZee;
+                                font-size: 20px;
+                                font-style: italic;
+                                font-weight: 400;
+                                line-height: 130%;">41 Lakhs</p>
+                                <p style="color: var(--Gray-2, #4F4F4F);
+                                font-family: Arial, Helvetica, sans-serif;
+                                font-size: 12px;
+                                font-style: normal;
+                                font-weight: 400;
+                                line-height: 155%; /* 18.6px */
+                                letter-spacing: 0.12px;">Highest Salary</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="second d-flex justify-content-center align-items-center">
+                        <div class="row">
+                            <div class="col-4">
+                                <div id="round">
+                                    <img class = "logo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqXfSfXdXlXKgXmBk7BSR-Pcc8TpbfPhIMmw&usqp=CAU" alt="logo">
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <p style="color: var(--BLACK, #2B2F34);
+                                font-family: ABeeZee;
+                                font-size: 20px;
+                                font-style: italic;
+                                font-weight: 400;
+                                line-height: 130%;">300+</p>
+                                <p style="color: var(--Gray-2, #4F4F4F);
+                                font-family: Arial, Helvetica, sans-serif;
+                                font-size: 12px;
+                                font-style: normal;
+                                font-weight: 400;
+                                line-height: 155%; /* 18.6px */
+                                letter-spacing: 0.12px;">Partner Companies</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="third d-flex justify-content-center align-items-center">
+                        <div class="row">
+                            <div class="col-4">
+                                <div id="round">
+                                    <img style = "height: 35px;" class = "logo" src="https://img.freepik.com/free-vector/green-double-circle-check-mark_78370-1749.jpg?size=626&ext=jpg&ga=GA1.1.75233702.1693055142&semt=ais" alt="Frame">
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <p style="color: var(--BLACK, #2B2F34);
+                                font-family: ABeeZee;
+                                font-size: 20px;
+                                font-style: italic;
+                                font-weight: 400;
+                                line-height: 130%;">100%</p>
+                                <p style="color: var(--Gray-2, #4F4F4F);
+                                font-family: Arial, Helvetica, sans-serif;
+                                font-size: 12px;
+                                font-style: normal;
+                                font-weight: 400;
+                                line-height: 155%; /* 18.6px */
+                                letter-spacing: 0.12px;">Job Guarantee</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fourth d-flex justify-content-center align-items-center">
+                        <div class="row">
+                            <div class="col-4">
+                                <div id="round">
+                                    <img style = "height: 60px; margin-top: -10px;" class = "logo" src="https://img.freepik.com/free-vector/illustration-financial-concept_53876-5862.jpg?size=626&ext=jpg&ga=GA1.1.75233702.1693055142&semt=ais" alt="Frame">
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <p style="color: var(--BLACK, #2B2F34);
+                                font-family: ABeeZee;
+                                font-size: 20px;
+                                font-style: italic;
+                                font-weight: 400;
+                                line-height: 130%;">8.3 LPA</p>
+                                <p style="color: var(--Gray-2, #4F4F4F);
+                                font-family: Arial, Helvetica, sans-serif;
+                                font-size: 12px;
+                                font-style: normal;
+                                font-weight: 400;
+                                line-height: 155%; /* 18.6px */
+                                letter-spacing: 0.12px;">Average Salary</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="made">
+                    Made with 💙 by an AccioJob Student
+                </div>
+            </div>
+
+
+
+
+
+            <form action="#"><div class="right-box d-flex  flex-column "
+                style="text-align: center; align-items: center; justify-content: space-between;">
+
+
+                <div id = "main-card"> 
+                    Start Attending Live Classes for Free!
+                </div>
+
+                <div style="color: #818D9D;
+          text-align: center;
+          font-family: Arial, Helvetica, sans-serif;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 150%; ">
+                    Live lectures & Assignments curated by Top Tech Proffesionals
+                </div>
+                <div class="d-flex flex-column justify-content-start">
+                    <div class="samr d-flex">
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20"
+                                fill="none">
+                                <g clip-path="url(#clip0_2023_158)">
+                                    <path
+                                        d="M10.5 14.1667C13.5517 14.1667 16.2208 15.4792 17.6725 17.4376L16.1375 18.1634C14.9558 16.7634 12.8725 15.8334 10.5 15.8334C8.12751 15.8334 6.04417 16.7634 4.86251 18.1634L3.32834 17.4367C4.78001 15.4784 7.44834 14.1667 10.5 14.1667ZM10.5 1.66675C11.6051 1.66675 12.6649 2.10573 13.4463 2.88714C14.2277 3.66854 14.6667 4.72835 14.6667 5.83341V8.33341C14.6666 9.40713 14.2521 10.4394 13.5095 11.2149C12.7669 11.9904 11.7535 12.4493 10.6808 12.4959L10.5 12.5001C9.39494 12.5001 8.33513 12.0611 7.55373 11.2797C6.77233 10.4983 6.33334 9.43848 6.33334 8.33341V5.83341C6.3334 4.7597 6.74796 3.72745 7.49055 2.95193C8.23315 2.17642 9.24646 1.71751 10.3192 1.67091L10.5 1.66675ZM10.5 3.33341C9.86233 3.33338 9.24874 3.57702 8.78479 4.01448C8.32083 4.45195 8.04158 5.05017 8.00417 5.68675L8.00001 5.83341V8.33341C7.99938 8.98417 8.25252 9.60952 8.70565 10.0766C9.15877 10.5437 9.77617 10.8157 10.4266 10.8347C11.0771 10.8538 11.7094 10.6186 12.1891 10.1789C12.6689 9.73918 12.9583 9.12975 12.9958 8.48008L13 8.33341V5.83341C13 5.17037 12.7366 4.53449 12.2678 4.06565C11.7989 3.59681 11.163 3.33341 10.5 3.33341Z"
+                                        fill="#8393A9" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_2023_158">
+                                        <rect width="20" height="20" fill="white" transform="translate(0.5)" />
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </div>
+                        <div style="color: var(--BLACK, #2B2F34);
+                font-family: Arial, Helvetica, sans-serif; 
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 150%; ">
+                            Samvrant Samantaray
+                        </div>
+                    </div>
+
+                    <div class="samr1 d-flex">
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20"
+                                fill="none">
+                                <g clip-path="url(#clip0_2023_163)">
+                                    <path
+                                        d="M8.305 8.90167C9.08695 10.2754 10.2246 11.4131 11.5983 12.195L12.335 11.1633C12.4535 10.9974 12.6286 10.8807 12.8273 10.8353C13.026 10.7898 13.2345 10.8188 13.4133 10.9167C14.5919 11.5608 15.8935 11.9481 17.2325 12.0533C17.4415 12.0699 17.6365 12.1646 17.7788 12.3186C17.921 12.4726 18 12.6745 18 12.8842V16.6025C18 16.8088 17.9235 17.0078 17.7853 17.161C17.6471 17.3142 17.4569 17.4106 17.2517 17.4317C16.81 17.4775 16.365 17.5 15.9167 17.5C8.78333 17.5 3 11.7167 3 4.58333C3 4.135 3.0225 3.69 3.06833 3.24833C3.08938 3.04308 3.18582 2.85293 3.33899 2.71469C3.49216 2.57646 3.69117 2.49996 3.8975 2.5H7.61583C7.82547 2.49997 8.02741 2.57896 8.1814 2.72121C8.33539 2.86346 8.43011 3.05852 8.44667 3.2675C8.55185 4.60649 8.93923 5.90807 9.58333 7.08667C9.68122 7.26547 9.71018 7.47395 9.66472 7.67266C9.61927 7.87137 9.50255 8.04654 9.33667 8.165L8.305 8.90167ZM6.20333 8.35417L7.78667 7.22333C7.33732 6.25341 7.02946 5.22403 6.8725 4.16667H4.675C4.67 4.305 4.6675 4.44417 4.6675 4.58333C4.66667 10.7967 9.70333 15.8333 15.9167 15.8333C16.0558 15.8333 16.195 15.8308 16.3333 15.825V13.6275C15.276 13.4705 14.2466 13.1627 13.2767 12.7133L12.1458 14.2967C11.6906 14.1198 11.2483 13.9109 10.8225 13.6717L10.7742 13.6442C9.13965 12.7139 7.78607 11.3604 6.85583 9.72583L6.82833 9.6775C6.58909 9.25166 6.38024 8.80945 6.20333 8.35417Z"
+                                        fill="#8393A9" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_2023_163">
+                                        <rect width="20" height="20" fill="white" transform="translate(0.5)" />
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </div>
+                        <div style="color: var(--textlabelcolorsfadeddenimblue, #8393A9);
+            font-family: Arial, Helvetica, sans-serif; 
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 150%;">
+                            Phone number
+                        </div>
+                    </div>
+                </div>
+
+                <div class="apply">
+                    Apply Now For Free <svg xmlns="http://www.w3.org/2000/svg" width="22" height="23"
+                        viewBox="0 0 22 23" fill="none">
+                        <g clip-path="url(#clip0_2023_170)">
+                            <path
+                                d="M12.0766 11.5002L7.53906 6.96267L8.83523 5.6665L14.6689 11.5002L8.83523 17.3338L7.53906 16.0377L12.0766 11.5002Z"
+                                fill="white" />
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_2023_170">
+                                <rect width="22" height="22" fill="white" transform="translate(0 0.5)" />
+                            </clipPath>
+                        </defs>
+                    </svg>
+                </div>
+
+                <div class="terms">
+                    By clicking ‘Apply now’, you agree to our <span>Terms & Conditions</span>
+                </div>
+
+
+
+            </div>
+            </form>
+
+        </section>
+
+        <section class="third-box">
+            <div class = "course-1">
+                learn full-stack web development
+            </div>
+
+            <div>
+                OUR COURSES
+            </div>
+
+            <div class="cards d-flex justify-content-around">
+                <div>
+                    <img src="./Sapling Card.png" alt="" height="540" class="card1">
+                </div>
+                <div>
+                    <img src="./Pioneer Card.png" alt="" height="540px" class="card2">
+                </div>
+
+            </div>
+        </section>
+
+        <section class="fourth-box">
+            <section>
+                <div class="d-flex flex-column justify-content-around align-items-center">
+                    <div class = "startups" yle="">
+                        Over 300+ hiring partners
+                    </div>
+
+                    <div class = " " style="color: var(--BLACK, #2B2F34);
+                    text-align: center;
+                    font-family: ABeeZee;
+                    font-size: 42px;
+                    font-style: italic;
+                    font-weight: 400;
+                    line-height: 150%; /* 63px */
+                    letter-spacing: -0.63px;">
+                        <p>Top Startups & MNC’s Hire</p><span style="color: var(--primaryskyblue, #2F80ED);
+                        font-family: ABeeZee;
+                        font-size: 42px;
+                        font-style: italic;
+                        font-weight: 400;
+                        line-height: 150%;
+                        letter-spacing: -0.63px;">Software Engineer</span>
+                    </div>
+
+                    <div style="color: var(--textlabelcolorscharcoal, #595959);
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 18px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 130%; /* 23.4px */
+                    letter-spacing: 0.36px;">From AccioJob upto 41 Lakhs
+                    </div>
+                    <div></div>
+                    <div>
+                        <div style="margin-top: 40px; margin: auto;">
+                          
+                            <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-4 company-logo">
+                                <img style="height: 150px; width: 200px;" src="data:image/jpeg;base64,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" alt="Logo 1">
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <article>
+        <section class="last-box">
+            <div class = "alumni-header" style="">
+                AccioJob Wall Of Love
+            </div>
+            <div class = "alumni-sub-header" style="">
+                Our Alumni Say it Best
+            </div>
+            <div class="container ">
+                <div class="photos row ">
+                    <div class=" alumni first-alumni col-lg-4 col-md-6 col-sm-12">
+                        <div class="d-flex align-items-center ">
+                            <div>
+                            </div>
+                            <div>
+                                <div class = "alumni-name">
+                                    Virat Kohli
+                                </div>
+                                <div class = "text">SDE-II at Indian Cricket Board</div>
+                            </div>
+                            <div>
+                            </div>
+                        </div>
+                        <div class = "para">
+                            My Life changed when I became a part of the AccioJob family. Before that, I was not able to
+                            score any centuries. As soon as I joined Accio, I hit a century against Afghanistan.
+                        </div>
+                        <div class = "date">
+                            Jun 14, 2022
+                        </div>
+                    </div>
+
+                    <div class="alumni second-alumni col-lg-4 col-md-6 col-sm-12 ">
+                        <div class="d-flex align-items-center ">
+                            <div>
+                            </div>
+                            <div>
+                                <div class = "alumni-name" >Ishan Kishan</div>
+                                <div style="color: #676767;
+                                font-family: Arial, Helvetica, sans-serif;
+                                font-size: 16px;
+                                font-style: normal;
+                                font-weight: 602;
+                                line-height: 150%;">Intern at Indian Cricket Board</div>
+                            </div>
+                            <div>
+                            </div>
+                        </div>
+                        <div class = "para">
+                            My Life changed when I became a part of the
+                            AccioJob family. Before that I was not able to
+                            score any centuries. As soon as I joined Accio,
+                            I hit a century against Afg anistan. My Life changed when I became a part of the AccioJob
+                            family. Before that I was not able to score any centuries. As soon as I joined Accio, I hit
+                            a century against Afganistan.
+                        </div>
+                        <div style="margin-top: 15px; color: #676767;
+                        font-family: Arial, Helvetica, sans-serif;
+                        font-size: 12px;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: 150%; /* 18px */">
+                            Jun 14, 2022
+                        </div>
+                    </div>
+
+                    <div class="alumni third-alumni col-lg-4 col-md-6 col-sm-12">
+                        <div class="d-flex align-items-center ">
+                            <div>
+                            </div>
+                            <div>
+                                <div class = "alumni-name">Virender Sehwag</div>
+                                <div style="color: #676767;
+                                font-family: Arial, Helvetica, sans-serif;
+                                font-size: 16px;
+                                font-style: normal;
+                                font-weight: 602;
+                                line-height: 150%;">SDE-IV at Indian Cricket Board</div>
+                            </div>
+                            <div>
+                            </div>
+                        </div>
+                        <div class = "para">
+                            My Life changed when I became a part of the
+                            AccioJob family. Before that I was not able to
+                            score any centuries. As soon as I joined Accio,
+                            I hit a century against Afganistan. Then I got
+                            offers from RCB for IPL as captain again. Bas
+                            ab India World Cup Jeet jaye.
+                        </div>
+                        <div style="margin-top: 15px; color: #676767;
+                        font-family: Arial, Helvetica, sans-serif;
+                        font-size: 12px;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: 150%; /* 18px */">
+                            Jun 14, 2022
+                        </div>
+                    </div>
+
+                    <div class="alumni fourth-alumni col-lg-4 col-md-6 col-sm-12">
+                        <div class = "student-card">
+                            <div class="d-flex align-items-center ">
+                            <div>
+                            </div>
+                            <div>
+                                <div class = "alumni-name">Rohit Sharma</div>
+                                <div style="color: #676767;
+                                font-family: Arial, Helvetica, sans-serif;
+                                font-size: 16px;
+                                font-style: normal;
+                                font-weight: 602;
+                                line-height: 150%;">SDE-II at Indian Cricket Board</div>
+                            </div>
+                            <div>
+
+                            </div>
+                        </div>
+                        </div>
+                        <div class = "para">
+                            My Life changed when I became a part of the
+                            AccioJob family. Before that I was not able to
+                            score any centuries. As soon as I joined Accio,
+                            I hit a century against Afganistan. Then I got
+                            offers from RCB for IPL as captain again. Bas
+                            ab India World Cup Jeet jaye.
+                        </div>
+                        <div style="margin-top: 15px; color: #676767;
+                        font-family: Arial, Helvetica, sans-serif;
+                        font-size: 12px;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: 150%; /* 18px */">
+                            Jun 14, 2022
+                        </div>
+                    </div>
+
+                    <div class="alumni fifth-alumni col-lg-4 col-md-6 col-sm-12">
+                        <div class="d-flex align-items-center ">
+                            <div>
+                                <img src="./Ellipse 42 (4).jpg" alt="Alumni 5" style="margin: 10px;">
+                            </div>
+                            <div>
+                                <div class = "alumni-name">Sarfaraz Ahmed</div>
+                                <div style="color: #676767;
+                                font-family: Arial, Helvetica, sans-serif;
+                                font-size: 16px;
+                                font-style: normal;
+                                font-weight: 602;
+                                line-height: 150%;">WK at Pak. Cricket Board</div>
+                            </div>
+                            <div>
+                                <img src="./LinkedIN.jpg" alt="linkedin" style="margin-top: -40px;">
+                            </div>
+                        </div>
+                        <div class = "para">
+                            Inshallah Boys Played well. My answer also same
+                            Inshallah Boys! Well done!
+                        </div>
+                        <div style="margin-top: 15px; color: #676767;
+                        font-family: Arial, Helvetica, sans-serif;
+                        font-size: 12px;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: 150%; /* 18px */">
+                            Jun 14, 2022
+                        </div>
+                    </div>
+
+                    <!-- Alumni 6 -->
+                    <div class="alumni sixth-alumni col-lg-4 col-md-6 col-sm-12">
+                        <div class="d-flex align-items-center ">
+                            <div>
+                                <img src="./Ellipse 42 (4).jpg" alt="Alumni 6" style="margin: 10px;">
+                            </div>
+                            <div>
+                                <div class = "alumni-name">Sachin Tendulkar</div>
+                                <div style="color: #676767;
+                                font-family: Arial, Helvetica, sans-serif;
+                                font-size: 16px;
+                                font-style: normal;
+                                font-weight: 602;
+                                line-height: 150%;">God at Indian Cricket Board</div>
+                            </div>
+
+                        </div>
+                        <div class = "para">
+                            My Life changed when I became a part of the
+                            AccioJob family. Before that I was not able to
+                            score any centuries. As soon as I joined Accio,
+                            I hit a century against Afganistan.
+                        </div>
+                        <div style="margin-top: 15px; color: #676767;
+                        font-family: Arial, Helvetica, sans-serif;
+                        font-size: 12px;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: 150%; /* 18px */">
+                            Jun 14, 2022
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </article>
+    </section>
+</body>
+
+</html>
